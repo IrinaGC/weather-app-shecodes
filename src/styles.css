@@ -67,6 +67,9 @@ h1 {
 .form-control {
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
+.footer {
+  font-size: 13px;
+}
 
 .list-group-horizontal {
   margin: 0px 0px 20px;
