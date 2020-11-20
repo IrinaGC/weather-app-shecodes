@@ -132,6 +132,9 @@ function getTemparature(response) {
   document.querySelector("#wind").innerHTML = Math.round(
     response.data.wind.speed
   );
+  let icon = response.data.weather[0].icon;
+  document.querySelector("#current-location-icon").setAttribute("src", `http://openweathermap.org/img/wn/${icon}@2x.png`);
+  document.querySelector("#current-location-icon").setAttribute("alt", response.data.weather[0].description)
 }
 
 function getGpsLocation(position) {
