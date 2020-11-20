@@ -70,6 +70,7 @@ celcius.addEventListener("click", changeCelcius);
 // Search Location with API
 
 function changeLocation(response) {
+  console.log(response.data)
   document.querySelector(
     "#city-weather"
   ).innerHTML = `${response.data.name}・${response.data.sys.country}`;
@@ -77,7 +78,7 @@ function changeLocation(response) {
     response.data.main.temp
   );
   document.querySelector("#currentState").innerHTML =
-    response.data.weather[0].main;
+    response.data.weather[0].description;
   document.querySelector("#day-temp").innerHTML = Math.round(
     response.data.main.temp_max
   );
@@ -88,6 +89,9 @@ function changeLocation(response) {
   document.querySelector("#wind").innerHTML = Math.round(
     response.data.wind.speed
   );
+  let icon = response.data.weather[0].icon;
+  document.querySelector("#current-location-icon").setAttribute("src", `http://openweathermap.org/img/wn/${icon}@2x.png`);
+  document.querySelector("#current-location-icon").setAttribute("alt", response.data.weather[0].description)
 }
 
 function search(city) {
