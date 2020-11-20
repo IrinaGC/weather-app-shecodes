@@ -55,7 +55,7 @@ function changeUnit(event) {
   currentTemperature.innerHTML = Math.round((temperature * 9) / 5 + 32);
 }
 
-let gradeChange = document.querySelector("#grade-change");
+let gradeChange = document.querySelector("#fahrenheit");
 gradeChange.addEventListener("click", changeUnit);
 
 function changeCelcius(event) {
