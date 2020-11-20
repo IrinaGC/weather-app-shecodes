@@ -46,26 +46,6 @@ let now = new Date();
 let weatherDate = document.querySelector("h6");
 weatherDate.innerHTML = formatDate(now);
 
-// C to F
-function changeUnit(event) {
-  event.preventDefault();
-  let currentTemperature = document.querySelector("#current-temperature");
-  let temperature = currentTemperature.innerHTML;
-  temperature = Number(temperature);
-  currentTemperature.innerHTML = Math.round((temperature * 9) / 5 + 32);
-}
-
-let gradeChange = document.querySelector("#fahrenheit");
-gradeChange.addEventListener("click", changeUnit);
-
-function changeCelcius(event) {
-  event.preventDefault();
-  let currentTemperature = document.querySelector("#current-temperature");
-  currentTemperature.innerHTML = "18";
-}
-
-let celcius = document.querySelector("#celcius");
-celcius.addEventListener("click", changeCelcius);
 
 // Search Location with API
 
@@ -74,6 +54,11 @@ function changeLocation(response) {
   document.querySelector(
     "#city-weather"
   ).innerHTML = `${response.data.name}・${response.data.sys.country}`;
+
+   celciusTemperature = response.data.main.temp;
+   dayTemp = response.data.main.temp_max
+  nightTemp = response.data.main.temp_min
+
   document.querySelector("#current-temperature").innerHTML = Math.round(
     response.data.main.temp
   );
@@ -117,6 +102,11 @@ function getTemparature(response) {
   document.querySelector(
     "#city-weather"
   ).innerHTML = `${response.data.name}・${response.data.sys.country}`;
+
+  celciusTemperature = response.data.main.temp;
+  dayTemp = response.data.main.temp_max
+  nightTemp = response.data.main.temp_min
+
   document.querySelector("#current-temperature").innerHTML = Math.round(
     response.data.main.temp
   );
@@ -155,5 +145,42 @@ function getCurrentLocationWeather(event) {
 
 let currentLocation = document.querySelector("#button-current-location");
 currentLocation.addEventListener("click", getCurrentLocationWeather);
+
+// C to F
+function changeFahrenheit(event) {
+  event.preventDefault();
+  let currentTemperature = document.querySelector("#current-temperature");
+ celcius.classList.remove("active");
+ fahrenheit.classList.add("active");
+ currentTemperature.innerHTML = Math.round((celciusTemperature * 9) / 5 + 32);
+  let day = document.querySelector("#day-temp");
+  let night = document.querySelector("#night-temp");
+  day.innerHTML = Math.round((dayTemp * 9) / 5 + 32);
+  night.innerHTML = Math.round((nightTemp * 9) / 5 + 32);
+}
+
+function changeCelcius(event) {
+  event.preventDefault();
+  celcius.classList.add("active");
+  fahrenheit.classList.remove("active");
+  let currentTemperature = document.querySelector("#current-temperature");
+  currentTemperature.innerHTML = Math.round(celciusTemperature);
+  let day = document.querySelector("#day-temp");
+  let night = document.querySelector("#night-temp");
+  day.innerHTML = Math.round(dayTemp);
+  night.innerHTML = Math.round(nightTemp);
+}
+
+
+let celciusTemperature = null;
+let dayTemp = null;
+let nightTemp = null;
+
+let fahrenheit = document.querySelector("#fahrenheit");
+fahrenheit.addEventListener("click", changeFahrenheit);
+
+let celcius = document.querySelector("#celcius");
+celcius.addEventListener("click", changeCelcius);
+
 
 search("london");

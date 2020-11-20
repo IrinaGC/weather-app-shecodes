@@ -17,7 +17,7 @@ h1 {
   font-size: 40px;
   margin-bottom: 1px;
 }
-li::first-letter {
+li:first-letter {
 text-transform: capitalize;
 }
 .btn {
@@ -48,10 +48,16 @@ text-transform: capitalize;
 .currentWeather {
   font-size: 70px;
 }
+.currentWeather .active {
+  color: white;
+  cursor: default;
+}
 
 #fahrenheit,
 #celcius {
   font-size: 20px;
+  text-decoration: none;
+  
 }
 
 #currentState {
