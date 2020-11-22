@@ -61,7 +61,6 @@ weatherDate.innerHTML = formatDate(now);
 
 
 function changeLocation(response) {
-
   document.querySelector(
     "#city-weather"
   ).innerHTML = `${response.data.name}・${response.data.sys.country}`;
@@ -91,8 +90,7 @@ function changeLocation(response) {
 }
 
 function changeForecast(response) {
-      console.log(response.data)
-      let forecastElement = document.querySelector("#forecast");
+  let forecastElement = document.querySelector("#forecast");
       forecastElement.innerHTML= null;
       let forecast = null;
       
