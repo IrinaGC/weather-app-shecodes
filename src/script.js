@@ -110,20 +110,29 @@ function search(city) {
 }
     function changeForecast(response) {
       console.log(response.data)
-      let icon = response.data.list[0].weather[0].icon
-      document.querySelector(".list-group-item").innerHTML=
-       `<span class="nextDay"><strong>${formatHours(response.data.list[0].dt * 1000)}</strong></span>
+      let forecastElement = document.querySelector("#forecast");
+      forecastElement.innerHTML= null;
+      let forecast = null;
+      
+
+      for (let index = 0; index < 5; index++) {
+      
+      forecast = response.data.list[index];
+      let icon = forecast.weather[0].icon
+      forecastElement.innerHTML +=
+       `<li class="list-group-item" class="flex-fill">
+       <span class="nextDay"><strong>${formatHours(forecast.dt * 1000)}</strong></span>
             <br />
             <div id="day1">
               <p>
                 <img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
                 <br />
-                <strong>${Math.round(response.data.list[0].main.temp_max)}º↑</strong>
-                <br />
-                ${Math.round(response.data.list[0].main.temp_min)}º↓
+                <strong>${Math.round(forecast.main.temp_max)}º↑</strong>      ${Math.round(forecast.main.temp_min)}º↓
               </p>
-            </div>`
-          
+            </div>
+            </li>
+            `
+      }
     }
 
 
