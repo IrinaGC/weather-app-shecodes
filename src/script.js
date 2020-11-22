@@ -1,5 +1,3 @@
-//Date & Time
-
 function formatDate(currentDate) {
   let days = [
     "Sunday",
@@ -57,13 +55,10 @@ function formatHours(timestamp) {
   return `${hours}:${minutes}`;
 }
 
-
 let now = new Date();
 let weatherDate = document.querySelector("h6");
 weatherDate.innerHTML = formatDate(now);
 
-
-// Search Location with API
 
 function changeLocation(response) {
 
@@ -73,7 +68,7 @@ function changeLocation(response) {
 
    celciusTemperature = response.data.main.temp;
    dayTemp = response.data.main.temp_max
-  nightTemp = response.data.main.temp_min
+   nightTemp = response.data.main.temp_min
 
   document.querySelector("#current-temperature").innerHTML = Math.round(
     response.data.main.temp
@@ -95,20 +90,7 @@ function changeLocation(response) {
   document.querySelector("#current-location-icon").setAttribute("alt", response.data.weather[0].description)
 }
 
-
-function search(city) {
-  let apiKey = "b61c3c1367ef76f46df98ab48f24e246";
-  let unit = ["metric", "imperial"];
-  let apiWeather = "https://api.openweathermap.org/data/2.5/weather";
-  let apiCity = `${apiWeather}?q=${city}&units=${unit[0]}&appid=${apiKey}`;
-  axios.get(apiCity).then(changeLocation);
-
-  let apiKeyF = "f8cc9d55625b8540d5e15097acb6a499";
-  let apiForecast = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit[0]}&appid=${apiKeyF}`
-  axios.get(apiForecast).then(changeForecast);
-  
-}
-    function changeForecast(response) {
+function changeForecast(response) {
       console.log(response.data)
       let forecastElement = document.querySelector("#forecast");
       forecastElement.innerHTML= null;
@@ -127,55 +109,31 @@ function search(city) {
               <p>
                 <img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
                 <br />
-                <strong>${Math.round(forecast.main.temp_max)}º↑</strong>      ${Math.round(forecast.main.temp_min)}º↓
+                <strong>${Math.round(forecast.main.temp_max)}º↑</strong> | ${Math.round(forecast.main.temp_min)}º↓
               </p>
             </div>
             </li>
             `
       }
-    }
+}
 
+function search(city) {
+  let apiKey = "b61c3c1367ef76f46df98ab48f24e246";
+  let unit = ["metric", "imperial"];
+  let apiWeather = "https://api.openweathermap.org/data/2.5/weather";
+  let apiCity = `${apiWeather}?q=${city}&units=${unit[0]}&appid=${apiKey}`;
+  axios.get(apiCity).then(changeLocation);
 
+  let apiKeyF = "f8cc9d55625b8540d5e15097acb6a499";
+  let apiForecast = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit[0]}&appid=${apiKeyF}`
+  axios.get(apiForecast).then(changeForecast);
   
+}
 
 function getLocation(event) {
   event.preventDefault();
   let city = document.querySelector("#input-location").value;
   search(city);
-}
-
-let newLocation = document.querySelector("#location-search-form");
-newLocation.addEventListener("submit", getLocation);
-
-// Button GPS location
-
-function getTemparature(response) {
-  document.querySelector(
-    "#city-weather"
-  ).innerHTML = `${response.data.name}・${response.data.sys.country}`;
-
-  celciusTemperature = response.data.main.temp;
-  dayTemp = response.data.main.temp_max
-  nightTemp = response.data.main.temp_min
-
-  document.querySelector("#current-temperature").innerHTML = Math.round(
-    response.data.main.temp
-  );
-  document.querySelector("#currentState").innerHTML =
-    response.data.weather[0].main;
-  document.querySelector("#day-temp").innerHTML = Math.round(
-    response.data.main.temp_max
-  );
-  document.querySelector("#night-temp").innerHTML = Math.round(
-    response.data.main.temp_min
-  );
-  document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-  document.querySelector("#wind").innerHTML = Math.round(
-    response.data.wind.speed
-  );
-  let icon = response.data.weather[0].icon;
-  document.querySelector("#current-location-icon").setAttribute("src", `http://openweathermap.org/img/wn/${icon}@2x.png`);
-  document.querySelector("#current-location-icon").setAttribute("alt", response.data.weather[0].description)
 }
 
 function getGpsLocation(position) {
@@ -186,7 +144,8 @@ function getGpsLocation(position) {
   let apiUrlEnd = "https://api.openweathermap.org/data/2.5/weather";
   
   let apiGpsWeather = `${apiUrlEnd}?lat=${lat}&lon=${lon}&units=${unit[0]}&appid=${apiKey}`;
-  axios.get(apiGpsWeather).then(getTemparature);
+  axios.get(apiGpsWeather).then(changeLocation);
+  
 }
 
 function getCurrentLocationWeather(event) {
@@ -194,16 +153,12 @@ function getCurrentLocationWeather(event) {
   navigator.geolocation.getCurrentPosition(getGpsLocation);
 }
 
-let currentLocation = document.querySelector("#button-current-location");
-currentLocation.addEventListener("click", getCurrentLocationWeather);
-
-// C to F
 function changeFahrenheit(event) {
   event.preventDefault();
   let currentTemperature = document.querySelector("#current-temperature");
- celcius.classList.remove("active");
- fahrenheit.classList.add("active");
- currentTemperature.innerHTML = Math.round((celciusTemperature * 9) / 5 + 32);
+  celcius.classList.remove("active");
+  fahrenheit.classList.add("active");
+  currentTemperature.innerHTML = Math.round((celciusTemperature * 9) / 5 + 32);
   let day = document.querySelector("#day-temp");
   let night = document.querySelector("#night-temp");
   day.innerHTML = Math.round((dayTemp * 9) / 5 + 32);
@@ -222,20 +177,20 @@ function changeCelcius(event) {
   night.innerHTML = Math.round(nightTemp);
 }
 
-
 let celciusTemperature = null;
 let dayTemp = null;
 let nightTemp = null;
+
+let newLocation = document.querySelector("#location-search-form");
+newLocation.addEventListener("submit", getLocation);
+
+let currentLocation = document.querySelector("#button-current-location");
+currentLocation.addEventListener("click", getCurrentLocationWeather);
 
 let fahrenheit = document.querySelector("#fahrenheit");
 fahrenheit.addEventListener("click", changeFahrenheit);
 
 let celcius = document.querySelector("#celcius");
 celcius.addEventListener("click", changeCelcius);
-
-//FORECAST
-
-
-
 
 search("london");

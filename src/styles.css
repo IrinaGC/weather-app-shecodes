@@ -7,9 +7,6 @@ h6 {
   font-size: 16px;
   padding-left: 43px;
   font-weight: 300;
-  text-decoration: underline;
-  text-decoration-color: #666666;
- text-decoration-style: dotted;
 }
 
 h1 {
@@ -92,18 +89,4 @@ text-transform: capitalize;
 }
 
 .nextDay {
-  font-size: 13px;
-  text-decoration: underline;
-  text-decoration-color: #666666;
-  text-decoration-style: dotted;
-}
-
-.nextDayEmoji {
-  font-size: 60px;
-  margin-bottom: 5px;
-}
-
-.row {
-  margin-top: 20px;
-  margin-bottom: 0px;
-}
+  font-size: 15px;}
