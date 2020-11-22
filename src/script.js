@@ -91,10 +91,9 @@ function changeLocation(response) {
 
 function changeForecast(response) {
   let forecastElement = document.querySelector("#forecast");
-      forecastElement.innerHTML= null;
-      let forecast = null;
-      
-
+  forecastElement.innerHTML= null;
+  let forecast = null;
+  
       for (let index = 0; index < 5; index++) {
       
       forecast = response.data.list[index];
@@ -143,7 +142,6 @@ function getGpsLocation(position) {
   
   let apiGpsWeather = `${apiUrlEnd}?lat=${lat}&lon=${lon}&units=${unit[0]}&appid=${apiKey}`;
   axios.get(apiGpsWeather).then(changeLocation);
-  
 }
 
 function getCurrentLocationWeather(event) {
