@@ -134,7 +134,6 @@ function getLocation(event) {
 }
 
 function getGpsForecast(response) {
-  console.log(response.data);
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML= null;
   let forecast = null;
