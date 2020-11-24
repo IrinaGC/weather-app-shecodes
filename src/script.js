@@ -105,7 +105,7 @@ function changeForecast(response) {
             <br />
             <div id="day1">
               <p>
-                <img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
+                <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
                 <br />
                 <span id= "temp-forecast"> ${Math.round(forecast.main.temp_max)}º </span>
               </p>
@@ -150,7 +150,7 @@ function getGpsForecast(response) {
             <br />
             <div id="day1">
               <p>
-                <img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
+                <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
                 <br />
                 ${Math.round(forecast.temp)}º
               </p>
