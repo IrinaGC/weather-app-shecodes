@@ -106,7 +106,7 @@ function changeForecast(response) {
               <p>
                 <img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
                 <br />
-                <strong>${Math.round(forecast.main.temp_max)}º↑</strong> | ${Math.round(forecast.main.temp_min)}º↓
+                ${Math.round(forecast.main.temp_max)}º
               </p>
             </div>
             </li>
@@ -133,6 +133,32 @@ function getLocation(event) {
   search(city);
 }
 
+function getGpsForecast(response) {
+  console.log(response.data);
+  let forecastElement = document.querySelector("#forecast");
+  forecastElement.innerHTML= null;
+  let forecast = null;
+  
+      for (let index = 3; index < 16; index+=3) {
+      
+      forecast = response.data.hourly[index];
+      let icon = forecast.weather[0].icon
+      forecastElement.innerHTML +=
+       `<li class="list-group-item" class="flex-fill">
+       <span class="nextDay"><strong>${formatHours(forecast.dt * 1000)}</strong></span>
+            <br />
+            <div id="day1">
+              <p>
+                <img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
+                <br />
+                ${Math.round(forecast.temp)}º
+              </p>
+            </div>
+            </li>
+            `
+      }
+}
+
 function getGpsLocation(position) {
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
@@ -142,6 +168,11 @@ function getGpsLocation(position) {
   
   let apiGpsWeather = `${apiUrlEnd}?lat=${lat}&lon=${lon}&units=${unit[0]}&appid=${apiKey}`;
   axios.get(apiGpsWeather).then(changeLocation);
+
+  let apiKeyForecast ="75cf8c7a314c4f9b630e483a84924871"
+  let apiUrlForecast = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${unit[0]}&exclude=current,daily,minutely,alerts&appid=${apiKeyForecast}`;
+  axios.get(apiUrlForecast).then(getGpsForecast);
+
 }
 
 function getCurrentLocationWeather(event) {
