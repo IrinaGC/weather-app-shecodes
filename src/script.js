@@ -96,6 +96,7 @@ function changeForecast(response) {
   
       for (let index = 0; index < 5; index++) {
       
+      
       forecast = response.data.list[index];
       let icon = forecast.weather[0].icon
       forecastElement.innerHTML +=
@@ -106,7 +107,7 @@ function changeForecast(response) {
               <p>
                 <img src="http://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
                 <br />
-                ${Math.round(forecast.main.temp_max)}º
+                <span id= "temp-forecast"> ${Math.round(forecast.main.temp_max)}º </span>
               </p>
             </div>
             </li>
@@ -138,9 +139,11 @@ function getGpsForecast(response) {
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML= null;
   let forecast = null;
+
   
-      for (let index = 3; index < 16; index+=3) {
-      
+  for (let index = 3; index < 16; index+=3) {
+    
+    
       forecast = response.data.hourly[index];
       let icon = forecast.weather[0].icon
       forecastElement.innerHTML +=
@@ -190,6 +193,7 @@ function changeFahrenheit(event) {
   let night = document.querySelector("#night-temp");
   day.innerHTML = Math.round((dayTemp * 9) / 5 + 32);
   night.innerHTML = Math.round((nightTemp * 9) / 5 + 32);
+  
 }
 
 function changeCelcius(event) {
